@@ -1,0 +1,29 @@
+Conexion RS232 - Lock-in 5210
+
+DRIVERS
+
+PL2303_Prolific_DriverInstaller_v1.5.0.zip
+Driver legacy para el adaptador USB-RS232 Prolific PL2303 (VID 067B, PID 2303).
+Se uso para comunicar la PC con el lock-in Signal Recovery 5210 por RS232 (COM5).
+Descarga:
+https://www.hioki.com/global/support/download/software/versionup/detail/id_508
+En esa pagina buscar: PL2303_Prolific_DriverInstaller_v1.5.0.zip
+
+Keithley_GPIB488v92.zip
+Driver GPIB-488 version 9.2 para interfaces Keithley KUSB-488A y KPCI-488A.
+Se usa con la tarjeta/interfaz GPIB que controla la fuente de potencia de banco.
+No corresponde a la conexion RS232 del lock-in.
+Descarga:
+https://www.tek.com/en/support/software/driver/9-2-0
+
+CONEXION UTILIZADA
+
+DB9 hembra (adaptador USB/PC) -> DB25 macho (lock-in):
+1 -> 1
+2 -> 2
+3 -> 3
+5 -> 7
+7 -> 5
+8 -> 4
+
+Los demas pines quedan desconectados. No usar cable null-modem ni cruzar 2 y 3.
