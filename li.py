@@ -1,17 +1,33 @@
 import time
-class LI:
-	def __init__(self, inst):
-		self.inst = inst
-		self.write = inst.write
-		self.query = inst.query
-		self.write('SEN 6')
-		time.sleep(10)
 
-	def x(self):
-		return int(self.query("X"))
+class LI: 
+    upbound = 12000
+    lowbound = 1000
 
-	def y(self):
-		return int(self.query("Y"))
+    def __init__(self, inst):
+        self.inst = inst
+        self.write = inst.write
+        self.query = inst.query
+        self.sens = int(self.query("SEN"))
 
-	def xy(self):
-		return self.x(), self.y()
+    def asense(self, x, y):
+        r = (x**2 + y**2)**0.5
+        
+        if r > upbound:
+        	self.sens += 1
+        	return True
+        if r < lowerbound:
+        	self.sens -= 1
+        	return True
+        # self.write("AS")
+        # inst.read_bytes(1)
+
+
+    def xy(self):
+        x, y = self.query("XY").strip().split(";")
+        
+        if self.asense(x, y):
+        	time.sleep(2)
+        	x, y = self.query("XY").strip().split(";")
+        
+        return int(x), int(y)

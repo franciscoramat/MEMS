@@ -1,0 +1,13 @@
+Conexion RS232 - Lock-in 5210
+
+DB9 hembra (adaptador USB/PC) -> DB25 macho (lock-in):
+1 -> 1
+2 -> 2
+3 -> 3
+5 -> 7
+7 -> 5
+8 -> 4
+
+Los demas pines quedan desconectados. No usar cable null-modem ni cruzar 2 y 3.
+
+Los drivers son para el adaptador usb del lockin y para la tarjeta de control de la fuente de potencia de banco que usa gpib.
