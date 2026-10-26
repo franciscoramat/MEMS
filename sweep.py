@@ -1,7 +1,6 @@
 import pyvisa
 import time
 import matplotlib
-matplotlib.use("Agg")
 matplotlib.use("TkAgg")
 
 import matplotlib.pyplot as plt
@@ -13,7 +12,6 @@ plt.rcParams.update({
     "grid.alpha": 0.25,
     "lines.linewidth": 2,
     "lines.marker": "."
-
 })
 
 from gf import GF
@@ -28,62 +26,71 @@ def main():
         gf = GF(rm.open_resource(
             "USB0::0x1AB1::0x0641::DG4E163251533::INSTR"
         ))
-        gf.set_v(50e-3)
+        amplitude = 300e-3
+        gf.set_v(amplitude)
         gf.output("ON")
+        print(f"Iniciando... {amplitude}V de excitación.\n")
+        time.sleep(5)
 
         lockin = LI(rm.open_resource(
-            "ASRL5::INSTR",
+            "ASRL10::INSTR",
             write_termination="\r",
             read_termination="\n",
         ))
 
         lockin.inst.flush(pyvisa.constants.BufferOperation.discard_read_buffer)
-        
+
         data = []
-        start = 32.764e+3
-        end = 32.767e+3
-        N = 500
+        start = 63.5e+3
+        end = 68e+3
+        N = 450
 
         plt.ion()
-        fig, ax = plt.subplots()
-        line_x, = ax.plot([], [], label="X")
-        line_y, = ax.plot([], [], label="Y")
-        ax.legend()
+        fig, (ax_x, ax_y, ax_r) = plt.subplots(3, 1, sharex=True)
+
+        line_x, = ax_x.plot([], [], label="X", color="cyan")
+        line_y, = ax_y.plot([], [], label="Y", color="orange")
+        line_r, = ax_r.plot([], [], label="R", color="lime")
+
+        for ax in (ax_x, ax_y, ax_r):
+            ax.legend()
+
+        ax_r.set_xlabel("Frecuencia (Hz)")
+        ax_r.set_ylabel("Amplitud (V)")
+        plt.tight_layout()
 
         for i in range(N):
-            f = start + i * (end - start) / (N - 1)
+            f = start + (N-i) * (end - start) / (N - 1)
 
             gf.set_f(f)
-            plt.pause(2)
+            plt.pause(1)
 
             x, y = lockin.xy()
             data.append((f, x, y))
             print(data[-1])
 
-            ff, xx, yy = zip(*data)
+            if i % 2 == 0:
+                ff, xx, yy = zip(*data)
+                rr = [(x**2 + y**2)**0.5 for x, y in zip(xx, yy)]
 
-            if i % 3 == 0:
                 line_x.set_data(ff, xx)
                 line_y.set_data(ff, yy)
+                line_r.set_data(ff, rr)
 
-                ax.relim()
-                ax.autoscale_view()
+                for ax in (ax_x, ax_y, ax_r):
+                    ax.relim()
+                    ax.autoscale_view()
+
                 fig.canvas.draw_idle()
                 fig.canvas.flush_events()
+
+        gf.output("OFF")
+
+        fig.savefig("sweep.png")
 
         plt.ioff()
         plt.show()
 
-
-        gf.output("OFF")
-
-        f, x, y = zip(*data)
-
-        plt.plot(f, x, label="X")
-        plt.plot(f, y, label="Y")
-        plt.legend()
-        plt.savefig("sweep.png")
-    
     finally:
         gf.output("OFF")
 
