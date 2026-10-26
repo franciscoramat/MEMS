@@ -1,9 +1,11 @@
 import pyvisa
 import time
+import csv 
+from datetime import datetime
 import matplotlib
 matplotlib.use("TkAgg")
-
 import matplotlib.pyplot as plt
+
 plt.style.use("dark_background")
 
 plt.rcParams.update({
@@ -26,7 +28,7 @@ def main():
         gf = GF(rm.open_resource(
             "USB0::0x1AB1::0x0641::DG4E163251533::INSTR"
         ))
-        amplitude = 300e-3
+        amplitude = 50e-3
         gf.set_v(amplitude)
         gf.output("ON")
         print(f"Iniciando... {amplitude}V de excitación.\n")
@@ -59,8 +61,17 @@ def main():
         ax_r.set_ylabel("Amplitud (V)")
         plt.tight_layout()
 
-        for i in range(N):
-            f = start + (N-i) * (end - start) / (N - 1)
+        filename = datetime.now().strftime("%d-%m-%H%M")
+        
+        direction = "forwards"  # "forwards", "backwards", "both"
+        for i in range(N if direction != "both" else 2*N):
+
+            if direction == "forwards":
+                f = start + i * (end - start) / (N - 1)
+            if direction == "backwards":
+                f = end - i * (end - start) / (N - 1)
+            if direction == "both":
+                f = start + min(i, 2*N - 1 - i) * (end - start) / (N - 1)
 
             gf.set_f(f)
             plt.pause(1)
@@ -86,7 +97,15 @@ def main():
 
         gf.output("OFF")
 
-        fig.savefig("sweep.png")
+        with open(f"{filename}.csv", "w", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow([f"Excitación: {amplitude}"])
+            writer.writerow(["Frecuencia (Hz)", "X (V)", "Y (V)", "R (V)"])
+            writer.writerows(
+                (f, x, y, (x**2 + y**2)**0.5)
+                for f, x, y in data
+            )
+        fig.savefig(f"{filename}.png")
 
         plt.ioff()
         plt.show()
