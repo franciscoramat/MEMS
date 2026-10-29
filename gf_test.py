@@ -13,7 +13,7 @@ def main():
 	time.sleep(1) 
 	gf.set_v(3)
 	time.sleep(2)
-	gf.sweep_f(1e+2, 1e+)
+	gf.sweep_f(1e+2, 1e+3, 10)
 	gf.output("OFF")
 	
 if __name__ == "__main__":

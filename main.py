@@ -24,20 +24,17 @@ def main():
 
     sweeper = Sweeper(gf, lockin)
 
-    amplitudes = [i * 10e-3 for i in range(14, 100)
-]
-    for amplitude in amplitudes:
 
-        sweeper.run(
-            start=63.5e3,
-            end=68e3,
-            N=450,
-            amplitude=amplitude,
-            direction="forwards",
-            plotlive=True
-        )
+    sweeper.run(
+        start=63.5e3,
+        end=68e3,
+        N=450,
+        amplitude=0.1,
+        direction="both",
+        plotlive=True
+    )
 
-        sweeper.save()
+    sweeper.save()
 
     plt.ioff()
     plt.show()

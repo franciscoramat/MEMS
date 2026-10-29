@@ -7,3 +7,5 @@ Tratamos de medir resonancia en vacio con mecanica pero no vimos nada entre 61 y
 NOs cambiamos al setup de Pirani. Estuvimos hasta las 5 renegando para medir un tuning fork adentro de la camara. EL cable de la referencia externa gf a lockin esta medio choto asi que hay que relojear si la luz del unlock esta prendida.
 Ahora vamos a medir un resonador sin acople. 
 Implemente medir x e y directamente en volts. 
+
+29/10 Pusimos la compu de Santi. Vacío aprox 1e-5 al empezar a medir.
