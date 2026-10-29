@@ -28,7 +28,7 @@ class Oscilloscope:
 		self.query("*OPC?")
 		print("Single completado")
 
-	def waveform(self):
+	def extract(self):
 		self.write("HEADER 0")
 		self.write("DATA:SOURCE CH1")
 		self.write("DATA:ENCDG RIBINARY")
@@ -77,7 +77,7 @@ def main():
 
 	osci.single(points=10_000)
 
-	t, v = osci.waveform()
+	t, v = osci.extract()
 
 	print(f"Recibidos {len(v)} puntos")
 	print(f"Intervalo de muestreo: {t[1] - t[0]:.3e} s")

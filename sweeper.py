@@ -19,7 +19,12 @@ class Sweeper:
 
 
 
-    def run(self, start, end, N, amplitude, direction="forwards", plotlive=False):
+    def run(self, start, end, N, amplitude, 
+        direction="forwards", 
+        plotlive=False,
+        stall=False):
+
+        success = False
 
         self.data = []
 
@@ -65,6 +70,8 @@ class Sweeper:
                 if plotlive and i % 2 == 0:
                     self.liveplot()
 
+            success = True
+
         except (Exception, KeyboardInterrupt) as e:
             if self.data:
                 self.save(error=str(e))
@@ -72,7 +79,8 @@ class Sweeper:
 
 
         finally:
-            self.gf.output("OFF")
+            if not(stall and success):
+                self.gf.output("OFF")
 
         if plotlive:
             self.liveplot()
