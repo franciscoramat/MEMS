@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import time
 import numpy as np
 from datetime import datetime
+from threading import Timer
 
 from gf import GF
 from li import LI
@@ -14,9 +15,9 @@ from oscilloscope import Oscilloscope
 def main():
 
     try:
-        amplitude = 1
+        amplitude = 1.1
         points = 1_000_000
-        window = .3
+        window = 1
 
         rm = pyvisa.ResourceManager()
 
@@ -35,16 +36,17 @@ def main():
         osci = Oscilloscope(rm.open_resource
             ("USB0::0x0699::0x0408::C011271::INSTR"
         ))
-        osci.vscale(amplitude)
+        osci.vscale(10e-3)
+        osci.vscale(100e-3, 2)
         osci.tscale(window / 10)
 
         sweeper = Sweeper(gf, lockin)
 
 
         sweeper.run(
-            start=63.5e3,
-            end=68e3,
-            N=200,
+            start=63e3,
+            end=67.4e3,
+            N=30,
             amplitude=amplitude,
             direction="forwards",
             plotlive=True,
@@ -52,16 +54,20 @@ def main():
         )
         sweeper.save()
 
-        gf.output("OFF")
+        Timer(0.5, gf.output, args=("OFF",)).start()
         osci.single(points=points)
+
         t, v = osci.extract()
+        _, v2 = osci.extract(2)
+        osci.plot(t,v)
+        osci.plot(t,v2)
 
         date = datetime.now().strftime("%d-%m-%H%M")    
         np.savetxt(
             f"ringdown-{date}.csv",
-            np.column_stack((t, v)),
+            np.column_stack((t, v, v2)),
             delimiter=",",
-            header="Tiempo (s),Voltaje (V)",
+            header="Tiempo (s),CH1 (V),CH2 (V)",
             comments=""
         )
 
