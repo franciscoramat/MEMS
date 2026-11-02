@@ -150,6 +150,13 @@ class Sweeper:
         if filename is None:
             filename = datetime.now().strftime("%d-%m-%H%M")
 
+        #Opción que agrego cuando guardamos a paso fino o grueso posterior
+        if filename == "fino":
+            filename = f"{datetime.now().strftime('%d-%m-%H%M')}_fino"
+
+        if filename == "grueso":
+            filename = f"{datetime.now().strftime('%d-%m-%H%M')}_gross_post"
+        
         # Guardar CSV
         with open(f"{filename}.csv", "w", newline="") as file:
             writer = csv.writer(file)

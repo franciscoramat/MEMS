@@ -27,14 +27,36 @@ def main():
 
     sweeper.run(
         start=63.5e3,
-        end=68e3,
-        N=450,
-        amplitude=0.1,
-        direction="both",
+        end=67.4e3,
+        N=200,
+        amplitude=1.5,
+        direction="forwards",
         plotlive=True
     )
 
     sweeper.save()
+
+    sweeper.run(
+        start=67.4e3,
+        end=67.6e3,
+        N=200,
+        amplitude=1.5,
+        direction="forwards",
+        plotlive=True
+    )
+
+    sweeper.save()
+
+    sweeper.run(
+            start=67.6e3,
+            end=80e3,
+            N=600,
+            amplitude=1.5,
+            direction="forwards",
+            plotlive=True
+        )
+
+    sweeper.save("grueso")
 
     plt.ioff()
     plt.show()
