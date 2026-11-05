@@ -15,7 +15,7 @@ def main():
     ))
 
     lockin = LI(rm.open_resource(
-        "ASRL10::INSTR",
+        "ASRL7::INSTR",
         write_termination="\r",
         read_termination="\n",
     ))
@@ -26,37 +26,16 @@ def main():
 
 
     sweeper.run(
-        start=63.5e3,
-        end=67.4e3,
-        N=200,
-        amplitude=1.5,
+        start=64e3,
+        end=66e3,
+        N=20000,
+        amplitude=2e-3,
         direction="forwards",
-        plotlive=True
+        plotlive=True,
+        stall=False
     )
 
     sweeper.save()
-
-    sweeper.run(
-        start=67.4e3,
-        end=67.6e3,
-        N=200,
-        amplitude=1.5,
-        direction="forwards",
-        plotlive=True
-    )
-
-    sweeper.save()
-
-    sweeper.run(
-            start=67.6e3,
-            end=80e3,
-            N=600,
-            amplitude=1.5,
-            direction="forwards",
-            plotlive=True
-        )
-
-    sweeper.save("grueso")
 
     plt.ioff()
     plt.show()

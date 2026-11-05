@@ -9,3 +9,23 @@ Ahora vamos a medir un resonador sin acople.
 Implemente medir x e y directamente en volts. 
 
 29/10 Pusimos la compu de Santi. Vacío aprox 1e-5 al empezar a medir.
+
+2/11
+ringdowns q esten bien:
+ - 1620
+ - 1621
+ - 1623
+ - 1625 (cohe)
+ - 1631 (decaimiento)
+ - 1634
+ - 1635
+ - 1637
+ - 1638 (cohe)
+ - 1643 (cohe)
+ - 1647 (cohe)
+ - 1650
+ - 1651 (cohe)
+ - 1652 (cohe)
+ - 1655 
+ - 1657
+ - 1658

@@ -2,6 +2,8 @@ import pyvisa
 import numpy as np
 import time
 import matplotlib.pyplot as plt
+from cycler import cycler
+from matplotlib.collections import LineCollection
 
 class Oscilloscope:
 	def __init__(self, inst):
@@ -18,9 +20,12 @@ class Oscilloscope:
 	def vscale(self, scale, channel=1):
 		self.write(f"CH{channel}:SCALE {scale}")
 
-
 	def position(self, position, channel=1):
 	    self.write(f"CH{channel}:POSITION {position}")
+
+	def offset(self, voltage, channel=1):
+	    self.write(f"CH{channel}:OFFSET {voltage}")
+
 
 	def single(self, points=10000):
 		self.write("ACQUIRE:STATE OFF")
@@ -67,14 +72,84 @@ class Oscilloscope:
 
 		return t, v
 
+	def plot(self, t, *v):
 
-	def plot(self, t, v):
-	    plt.figure()
-	    plt.plot(t, v)
-	    plt.xlabel("Tiempo (s)")
-	    plt.ylabel("Voltaje (V)")
-	    plt.grid(True)
-	    plt.show()
+		plt.rcParams.update({
+			# Fondo
+			"figure.facecolor": "#080D14",
+			"axes.facecolor": "#080D14",
+			"savefig.facecolor": "#080D14",
+
+			# Grilla
+			"axes.grid": True,
+			"axes.axisbelow": True,
+			"grid.color": "#657080",
+			"grid.alpha": 0.12,
+			"grid.linewidth": 0.4,
+			"grid.linestyle": "-",
+
+			# Ejes
+			"axes.edgecolor": "#4A5565",
+			"axes.labelcolor": "#C8D0DA",
+			"axes.linewidth": 0.6,
+			"xtick.color": "#A0AAB8",
+			"ytick.color": "#A0AAB8",
+			"xtick.direction": "in",
+			"ytick.direction": "in",
+
+			# Texto
+			"text.color": "#C8D0DA",
+			"font.size": 9,
+
+			# Resolución
+			"figure.dpi": 160,
+		})
+
+		fig, ax1 = plt.subplots(figsize=(6, 4))
+		ax2 = ax1.twinx()
+
+		# Efecto fósforo: acumulación de brillo
+		def phosphor(ax, signal, color):
+
+			chunk = 32
+
+			segments = [
+				np.column_stack((t[i:i+chunk+1], signal[i:i+chunk+1]))
+				for i in range(0, len(t)-1, chunk)
+			]
+
+			ax.add_collection(LineCollection(
+				segments,
+				colors=color,
+				linewidths=0.35,
+				alpha=0.06,
+				antialiaseds=True
+			))
+
+			ax.autoscale_view()
+
+		# CH1 - Eje izquierdo
+		phosphor(ax1, v[0], "#F0CF4B")
+		ax1.set_ylabel("CH1 (V)", color="#F0CF4B")
+		ax1.tick_params(axis="y", colors="#F0CF4B")
+
+		# CH2 - Eje derecho
+		phosphor(ax2, v[1], "#4CD4E6")
+		ax2.set_ylabel("CH2 (V)", color="#4CD4E6")
+		ax2.tick_params(axis="y", colors="#4CD4E6")
+
+		# Eje temporal compartido
+		ax1.set_xlabel("Tiempo (s)")
+		ax1.set_xlim(t[0], t[-1])
+
+		# Grilla
+		ax1.minorticks_on()
+		ax1.grid(which="minor", alpha=0.08, linewidth=0.4)
+		ax2.grid(False)
+
+		fig.tight_layout()
+
+		return fig
 
 def main():
 	name = "USB0::0x0699::0x0408::C011271::INSTR"
