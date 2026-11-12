@@ -15,7 +15,7 @@ def main():
     ))
 
     lockin = LI(rm.open_resource(
-        "ASRL7::INSTR",
+        "ASRL10::INSTR",
         write_termination="\r",
         read_termination="\n",
     ))
