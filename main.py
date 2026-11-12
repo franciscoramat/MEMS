@@ -26,9 +26,9 @@ def main():
 
 
     sweeper.run(
-        start=64e3,
-        end=66e3,
-        N=20000,
+        start=65e3,
+        end=65.2e3,
+        N=1000,
         amplitude=2e-3,
         direction="forwards",
         plotlive=True,

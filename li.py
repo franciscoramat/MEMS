@@ -9,8 +9,8 @@ class LI:
     1e-3, 3e-3, 10e-3, 30e-3,
     100e-3, 300e-3, 1, 3
     ]
-    upbound = 10000
-    lowbound = 1000
+    upbound = 80000
+    lowbound = 5000
 
     def __init__(self, inst):
         self.inst = inst
