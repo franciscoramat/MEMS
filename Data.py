@@ -316,6 +316,7 @@ class Ringdown:
         frequency_band,
         fit_method="exponential",
         decay_start_time=None,
+        noise_bands=((60e3, 63e3), (70e3, 75e3)),
         spectrogram_window=20e-3,
         spectrogram_overlap=0.9,
         spectrogram_peak_range=15,
@@ -387,8 +388,29 @@ class Ringdown:
         )
         self.envelope = np.abs(signal.hilbert(self.filtered_signal))
 
-        tail_size = max(1, len(self.envelope) // 10)
-        self.noise_floor = np.median(self.envelope[-tail_size:])
+        tail_size = max(1, len(self.signal) // 10)
+        tail = self.signal[-tail_size:]
+        nperseg = min(len(tail), 16_384)
+        noise_frequency, noise_psd = signal.welch(
+            tail,
+            fs=sample_rate,
+            window="hann",
+            nperseg=nperseg,
+            detrend="constant",
+        )
+        sideband_psd = []
+        for band_low, band_high in noise_bands:
+            sideband = (
+                (noise_frequency >= band_low)
+                & (noise_frequency <= band_high)
+            )
+            if not np.any(sideband):
+                raise ValueError("Las bandas de ruido no contienen bins espectrales.")
+            sideband_psd.extend(noise_psd[sideband])
+        noise_density = np.median(sideband_psd)
+        noise_bandwidth = high_frequency - low_frequency
+        noise_rms = np.sqrt(noise_density * noise_bandwidth)
+        self.noise_floor = np.sqrt(2 * np.log(2)) * noise_rms
         self.noise_limit = 3 * self.noise_floor
         self.filter_transient = 3 / low_frequency
         analysis_mask = (
@@ -464,7 +486,7 @@ class Ringdown:
 
         return self
 
-    def plot(self, trace_style="lines"):
+    def plot(self, trace_style="lines", filtered_band=None, time_limits=None):
         if trace_style not in ("density", "lines"):
             raise ValueError("trace_style debe ser 'density' o 'lines'.")
 
@@ -599,11 +621,36 @@ class Ringdown:
         channel_2_axis.grid(False)
 
         if self.filtered_signal is not None:
-            plot_signal(
-                axes[1],
-                self.time * 1e3,
-                self.filtered_signal * 1e3,
-                colors["filtered"],
+            plot_envelope = self.envelope
+            if filtered_band is not None:
+                sample_rate = 1 / np.median(np.diff(self.time))
+                filter_sections = signal.butter(
+                    4, filtered_band, btype="bandpass", fs=sample_rate,
+                    output="sos",
+                )
+                plot_filtered = signal.sosfiltfilt(filter_sections, self.signal)
+                plot_envelope = np.abs(signal.hilbert(plot_filtered))
+                plot_signal(
+                    axes[1], self.time * 1e3, plot_filtered * 1e3,
+                    colors["filtered"],
+                )
+
+            # Solo se reducen los puntos dibujados; el ajuste usa todos los datos.
+            display_step = max(1, round(0.1e-3 / np.median(np.diff(self.time))))
+            display_count = len(plot_envelope) // display_step
+            display_time = self.time[:display_count * display_step].reshape(
+                -1, display_step
+            ).mean(axis=1)
+            display_envelope = np.median(
+                plot_envelope[:display_count * display_step].reshape(
+                    -1, display_step
+                ), axis=1,
+            )
+            axes[1].plot(
+                display_time * 1e3, display_envelope * 1e3,
+                color="#D97706" if filtered_band is not None else colors["filtered"],
+                linewidth=1.0 if filtered_band is not None else 1.2,
+                label="Envolvente" if filtered_band is not None else "Envolvente medida",
             )
             if self.fit_curve is not None:
                 decay_mask = self.time >= self.decay_start_time
@@ -611,10 +658,19 @@ class Ringdown:
                     self.time[decay_mask] * 1e3,
                     self.fit_curve[decay_mask] * 1e3,
                     color=colors["fit"],
-                    linewidth=2.0,
+                    linewidth=1.5,
+                    label="Ajuste",
                 )
-            axes[1].set_ylabel("Señal filtrada (mV)")
+            if time_limits is not None:
+                axes[1].set_xlim(np.asarray(time_limits) * 1e3)
+            if filtered_band is None:
+                axes[1].set_ylim(bottom=0)
+            axes[1].set_ylabel(
+                "Señal filtrada (mV)" if filtered_band is not None
+                else "Envolvente (mV)"
+            )
             axes[1].set_xlabel("Tiempo desde la liberación (ms)")
+            axes[1].legend()
             style_axis(axes[1])
 
         if self.spectrogram_power is not None:

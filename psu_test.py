@@ -9,7 +9,7 @@ def main():
 		psu = PSU(rm.open_resource('GPIB0::1::INSTR'))
 		psu.CC()
 		psu.set_I(5, 20)
-		time.sleep(1)
+		time.sleep(2)
 		psu.output('ON')
 		time.sleep(2)
 		print(psu.read_I())

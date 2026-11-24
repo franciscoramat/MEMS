@@ -25,7 +25,9 @@ class PSU:
 		self.write(f'CURR {i}')
 
 	def set_field(self, field, vmax):
-		self.set_I((field + 0.00097144) / 0.01910608, vmax)
+		current = (field + 0.00097144) / 0.01910608
+		self.set_I(current, vmax)
+		return current
 
 	def read_V(self):
 	    return float(self.query('MEAS:VOLT?'))
