@@ -1,121 +1,25 @@
 % !TEX TS-program = pdflatex
 % !TEX encoding = UTF-8 Unicode
-\documentclass[10pt,twocolumn]{article}
+\documentclass[reprint,amsmath,amssymb,aps]{revtex4-2}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
 \usepackage[spanish]{babel}
-\usepackage{amsmath}
-\usepackage{float}
-\usepackage{siunitx}
-\usepackage{geometry}
-\geometry{a4paper,top=2.25cm,bottom=2.25cm,left=2cm,right=2cm}
-\usepackage{placeins}
 \usepackage{graphicx}
-\usepackage{paralist}
-\usepackage{verbatim}
-\usepackage{subfig}
-\usepackage{cite}
+\usepackage{siunitx}
+\usepackage{placeins}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true,linkcolor=black,citecolor=black}
-\usepackage[format=plain,labelfont=it,textfont=it]{caption}
-\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
-\setlength{\floatsep}{8pt plus 2pt minus 2pt}
-\setlength{\intextsep}{8pt plus 2pt minus 2pt}
-\setlength{\dbltextfloatsep}{8pt plus 2pt minus 2pt}
-\setlength{\dblfloatsep}{8pt plus 2pt minus 2pt}
-\setlength{\abovecaptionskip}{4pt}
-\setlength{\belowcaptionskip}{2pt}
-\setcounter{topnumber}{2}
-\setcounter{bottomnumber}{2}
-\setcounter{totalnumber}{4}
-\renewcommand{\topfraction}{0.9}
-\renewcommand{\bottomfraction}{0.8}
-\renewcommand{\textfraction}{0.08}
-\renewcommand{\floatpagefraction}{0.8}
-\raggedbottom
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\renewcommand{\headrulewidth}{0pt}
-\lhead{}\chead{}\rhead{}
-\lfoot{}\cfoot{\raisebox{5pt}{\small\thepage}}\rfoot{}
-\usepackage{varwidth}
-\usepackage{authblk}
-\newcommand{\filiacion}[2]{\affil[#1]{\protect\begin{varwidth}[t]{\linewidth}\protect\centering \normalfont#2 \protect\end{varwidth}}}
-\newcommand{\autor}[2]{\author[#1]{\bf #2}}
-\newcommand{\autorsimple}[1]{\author{\bf #1}}
-\newcommand{\filiacionsimple}[1]{\affil{\protect\begin{varwidth}[t]{\linewidth}\protect\centering \normalfont#1 \protect\end{varwidth}}}
-\newcommand{\autorbloque}[2]{\author{\bf #1\\\normalfont\small #2}}
-\newcommand{\corresponding}[2]{\author[#1]{\bf #2\thanks{}}}
-\newcommand\cauthemail[1]{\footnotetext{#1}}
-\newcommand{\fecha}[1]{\date{\vspace{-1ex}\small{#1}}}
-\newcommand{\firstpagelogos}{}
-\date{}
-\renewcommand\Authand{, }
-\renewcommand\Authands{, }
-\newcommand{\titulo}[2]{%
-  \title{{%
-    \setlength{\tabcolsep}{0pt}%
-    \renewcommand{\arraystretch}{1.04}%
-    \bfseries\fontsize{13.6}{14.8}\selectfont
-    \begin{tabular}{@{}c@{}}#1%
-    \if\relax\detokenize{#2}\relax
-    \else\\#2%
-    \fi
-    \end{tabular}%
-  }}}
-\newcommand{\esresumen}[1]{\small{#1 \par}\vspace{1.5ex}}
-\newcommand{\pclaves}[1]{\small{\emph{#1} \par}\vspace{1.5ex}}
-\newcommand{\enresumen}[1]{\small{#1 \par}\vspace{1.5ex}}
-\newcommand{\keywords}[1]{\small{\emph{#1} \par}\vspace{1.5ex}}
-\usepackage{titlesec}
-\titleformat{\section}{\fontsize{10}{12}\selectfont\sffamily\bfseries\upshape}{\thesection}{0.6em}{}
-\titleformat{\subsection}{\fontsize{10}{12}\selectfont\sffamily\bfseries\upshape}{}{0pt}{}
-\titlespacing*{\section}{0pt}{1.5ex}{0.8ex}
-\titlespacing*{\subsection}{0pt}{1.2ex}{0.6ex}
-\setcounter{secnumdepth}{2}
-\usepackage[nottoc,notlof,notlot]{tocbibind}
-\usepackage[titles,subfigure]{tocloft}
-\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
-\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape}
-\renewcommand\thesection{\Roman{section}}
-\renewcommand\thesubsection{}
-\renewcommand{\theHsubsection}{\arabic{section}.\arabic{subsection}}
-\usepackage{booktabs}
-\usepackage{array}
-\makeatletter
-\newcommand{\thickhline}{\noalign {\ifnum 0=`}\fi \hrule height 1.5pt\futurelet \reserved@a \@xhline}
-\newcolumntype{"}{@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}}
-\makeatother
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\renewcommand\spanishtablename{Tabla}
-\makeatletter
-\renewcommand\@biblabel[1]{#1.}
-\makeatother
-\titulo{TÍTULO DEL INFORME}{SUBTÍTULO OPCIONAL}
-\autorbloque{Nombre Apellido}{Institución\\Departamento o curso\\Ciudad, país}
-\fecha{\today}
-\setcounter{Maxaffil}{0}
-\renewcommand\Authfont{\normalsize}
-\renewcommand\Affilfont{\itshape\footnotesize}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black}
+\newcommand{\esresumen}[1]{#1}
 \begin{document}
-\renewcommand{\abstractname}{}
-\twocolumn[
-  \begin{@twocolumnfalse}
-   \firstpagelogos
-   \maketitle
-    \begin{abstract}\vspace{-12ex}
-\centering\begin{minipage}{\dimexpr\paperwidth-6cm}
-\vspace{20pt}
+\title{\texorpdfstring{\includegraphics[width=3.35cm]{figuras/logos.png}\\[1ex]}{}TÍTULO DEL INFORME\\SUBTÍTULO OPCIONAL}
+\author{Francisco Ramat}
+\author{Santiago Russo}
+\affiliation{Física Experimental III, Instituto Balseiro, Centro Atómico Bariloche, Comisión Nacional de Energía Atómica, Universidad Nacional de Cuyo, San Carlos de Bariloche, Argentina}
+\date{\today}
+\begin{abstract}
 \input{resumen.tex}
-\end{minipage}
-\vspace{4ex}
- \end{abstract}
-  \end{@twocolumnfalse}
-]
-\thispagestyle{fancy}
+\end{abstract}
+\maketitle
 \input{introduccion.tex}
 \FloatBarrier
 \input{metodos.tex}
@@ -123,7 +27,7 @@
 \input{resultados.tex}
 \FloatBarrier
 \input{conclusion.tex}
-\vspace{10pt}
+\FloatBarrier
 \begin{thebibliography}{9}
 \input{bibliografia.tex}
 \end{thebibliography}
@@ -133,3 +37,4 @@
 \renewcommand{\thefigure}{A\arabic{figure}}
 \input{apendice.tex}
 \end{document}
+
