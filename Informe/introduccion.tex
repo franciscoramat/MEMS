@@ -14,18 +14,19 @@ oscilación a partir de una señal eléctrica.
 
 \begin{figure}[tb]
 \centering
-\includegraphics[width=.8\linewidth]{figuras/resonador_a5.jpg}
-% Micrografía de la diapositiva 7 de la presentación oral «MEMS - Ramat».
+\includegraphics[width=.8\linewidth]{figuras/ImagenResonador.png}
+% Micrografía SEM del resonador y sus extremos.
 \caption{Micrografía del resonador A5. En el centro se ven las vigas de la
 parte móvil y, por encima y por debajo, los electrodos en forma de peine.
-La barra de escala corresponde a \SI{100}{\micro\metre}.}
+La barra de escala corresponde a \SI{10}{\micro\metre}. En la parte superior derecha
+se muestra el anclaje del resonador que conforma sus extremos.}
 \label{fig:intro-a5}
 \end{figure}
 
 Para describir el movimiento cerca de una resonancia, se puede empezar por
 considerar un solo modo de vibración. Si $x$ representa el desplazamiento
 del modo, a pequeñas amplitudes la fuerza restauradora es aproximadamente
-proporcional a $x$. A mayores amplitudes, el estiramiento de las vigas hace
+proporcional a $x$, un comportamiento de oscilador armónico al cual se lo identifica como régimen lineal. A mayores amplitudes, el estiramiento de las vigas hace
 que esta aproximación deje de ser suficiente. Si se agrega un término
 cúbico a la fuerza restauradora, se obtiene la ecuación de Duffing,
 \begin{equation}
@@ -74,7 +75,7 @@ acoplamiento entre ambos permite el intercambio de energía.
 Durante la excitación, el modo de mayor frecuencia puede almacenar parte
 de la energía que recibe del modo principal. Al apagar la fuerza externa,
 esa energía puede volver al modo principal y mantener casi constantes su
-amplitud y su frecuencia durante un breve intervalo. En ese intervalo,
+amplitud y su frecuencia durante un breve intervalo de tiempo, llamado tiempo de coherencia. En ese intervalo,
 el intercambio de energía puede dar lugar a bandas laterales, que son
 picos a ambos lados de la frecuencia principal en el
 espectro~\cite{chen-2017}.
@@ -85,5 +86,5 @@ compatibles con una resonancia interna 1:3. Para ello se estudia cómo se
 desplaza el pico al variar la amplitud de excitación y se compara la
 respuesta al barrer la frecuencia en ambos sentidos. También se registra
 la oscilación libre tras apagar la excitación (\textit{ringdown}). En estos
-registros se analiza si el decaimiento comienza de inmediato o si aparece
-un intervalo de amplitud y frecuencia casi constantes con bandas laterales.
+registros se analiza si el decaimiento comienza de inmediato o si existe
+tiempo de coherencia.
