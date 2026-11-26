@@ -14,6 +14,7 @@ from oscilloscope import Oscilloscope
 
 def main():
 
+    gf = None
     try:
         amplitude = 1.5
         points = 1_000_000
@@ -27,7 +28,7 @@ def main():
         ))
 
         lockin = LI(rm.open_resource(
-            "ASRL7::INSTR",
+            "ASRL5::INSTR",
             write_termination="\r",
             read_termination="\n",
             timeout=5000
@@ -51,7 +52,7 @@ def main():
 
         sweeper.run(
             start=63e3,
-            end=69e3,
+            end=67478,
             N=40,
             amplitude=amplitude,
             direction="forwards",
@@ -82,7 +83,8 @@ def main():
 
     finally:
 
-        gf.output("OFF")
+        if gf is not None:
+            gf.output("OFF")
         plt.ioff()
         plt.show()
 

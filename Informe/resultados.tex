@@ -1,13 +1,127 @@
 \section{RESULTADOS Y DISCUSIÓN}
 \subsection{Resultados}
-\FloatBarrier
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=.8\columnwidth,trim=13.8bp 0 -13.8bp 0,clip=false]{../Figuras_paper/figure_1_amplitude_sweeps.pdf}
+\caption{Respuesta del resonador en funci\'on de la frecuencia para distintas amplitudes
+de excitaci\'on. Se muestran los 84 barridos corregidos y, con color, cuatro
+curvas representativas. El recuadro muestra la frecuencia de corte $f_{\mathrm{c}}$,
+definida como la frecuencia muestreada donde $R$ alcanza su m\'aximo. El trazo
+continuo corresponde al ajuste cuadr\'atico para $V_{\mathrm{ac}}\le0.12$ V y el
+discontinuo al ajuste constante para $V_{\mathrm{ac}}\ge0.14$ V.}
+\label{fig:barridos-amplitud}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=.8\columnwidth,trim=14.6bp 0 -14.6bp 0,clip=false]{../Figuras_paper/figure_2_lorentzian_hysteresis.pdf}
+\caption{\textbf{(a)} Barrido de baja amplitud y ajuste del m\'odulo $R$ con un t\'ermino constante m\'as la ra\'iz cuadrada de un perfil lorentziano. \textbf{(b)} Barrido de ida y vuelta
+a amplitud mayor.}
+\label{fig:lineal-histeresis}
+\end{figure}
+
+\begin{figure*}[!t]
+\centering
+\makebox[.32\textwidth][c]{\includegraphics[height=.25\textwidth,trim=-1.3bp 0 1.3bp 0,clip=false]{../Figuras_paper/ringdown_1625_raw_channels_inset.pdf}}%
+\makebox[.32\textwidth][c]{\includegraphics[height=.25\textwidth,trim=14.4bp 0 -14.4bp 0,clip=false]{../Figuras_paper/ringdown_1625_decay_semilog_inset.pdf}}%
+\makebox[.32\textwidth][c]{\includegraphics[height=.25\textwidth,trim=8.6bp 0 -8.6bp 0,clip=false]{../Figuras_paper/ringdown_1625_spectrogram_logpower.pdf}}%
+\caption{Registro de ringdown del 2 de noviembre a las 16:25. De izquierda a
+derecha: \textbf{(a)} señales en CH1 y CH2 alrededor del apagado de la excitación,
+\textbf{(b)} envolvente de CH1 con el ajuste exponencial (línea negra discontinua) y
+\textbf{(c)} espectrograma de potencia en escala logarítmica. El recuadro del panel central
+muestra la envolvente y el mismo ajuste en escala semilogarítmica.}
+\label{fig:ringdown-1625}
+\end{figure*}
+
+La Figura~\ref{fig:barridos-amplitud} re\'une los barridos corregidos,
+medidos para amplitudes nominales de excitaci\'on entre \SI{0.01}{\volt} y
+\SI{0.86}{\volt}. Para cada barrido, definimos la frecuencia de corte
+$f_{\mathrm{c}}$ como la frecuencia muestreada en que la respuesta $R$
+alcanza su m\'aximo.
+Al aumentar $V_{\mathrm{ac}}$, $f_{\mathrm{c}}$ se desplaza hacia frecuencias
+mayores. El ajuste del recuadro es cuadr\'atico para
+$V_{\mathrm{ac}}\le\SI{0.12}{\volt}$ y constante para
+$V_{\mathrm{ac}}\ge\SI{0.14}{\volt}$. Entre \SI{0.14}{\volt} y
+\SI{0.86}{\volt}, la posici\'on y altura del m\'aximo cambian poco. La
+media de las frecuencias de pico en los 72 barridos de este intervalo es
+\((67{,}405\pm0{,}024)\,\mathrm{kHz}\), donde la dispersi\'on es la
+desviaci\'on est\'andar muestral; la altura se mantiene cerca de
+\SI{12}{\milli\volt}.
+
+Para cada barrido, se ajustaron polinomios cuadr\'aticos a $X$ e $Y$ fuera
+de la ventana de resonancia y se restaron punto a punto. La respuesta se
+reconstruy\'o como $R=\sqrt{X_{\mathrm{corr}}^2+Y_{\mathrm{corr}}^2}$.
+Esta correcci\'on independiente para cada amplitud permite retirar el fondo
+y comparar la respuesta resonante (Ap\'endice~\ref{fig:correccion-fondo}).
+
+En la Figura~\ref{fig:lineal-histeresis}(a), para el barrido con
+$V_{\mathrm{ac}}=\SI{2}{\milli\volt}$, se ajusta el m\'odulo $R$ con un t\'ermino
+constante m\'as la ra\'iz cuadrada de un perfil lorentziano. Esto corresponde
+a un perfil lorentziano para el cuadrado de la amplitud en el r\'egimen lineal.
+El ajuste da $f_0\simeq\SI{65.076}{\kilo\hertz}$ y
+$Q\simeq2.1\times10^4$. El ancho caracter\'istico $f_0/Q$ es de unos
+\SI{3.1}{\hertz}. En la
+Figura~\ref{fig:lineal-histeresis}(b), medida a
+$V_{\mathrm{ac}}=\SI{100}{\milli\volt}$, la respuesta se inclina hacia
+frecuencias altas. En la rama de ida, crece hasta aproximadamente
+\SI{9.4}{\milli\volt} justo antes de caer bruscamente cerca de
+\SI{66.4}{\kilo\hertz}. En el barrido de vuelta, la respuesta se mantiene
+cerca del fondo en ese intervalo y presenta solo un máximo de unos
+\SI{0.94}{\milli\volt} cerca de \SI{64.6}{\kilo\hertz}. Así, para una misma
+frecuencia entre las ramas se observan amplitudes distintas. La inclinación
+hacia frecuencias mayores y el salto entre ramas son cualitativamente
+consistentes con el endurecimiento y la histéresis descritos en la
+introducción.
+
+La Figura~\ref{fig:ringdown-1625} muestra el registro del 2 de noviembre a
+las 16:25, tras apagar la excitación. Antes del corte, CH2 registra la
+excitación activa. Su caída señala el apagado. CH1 muestra la respuesta
+detectada. Después del corte, su envolvente permanece casi constante durante
+un intervalo inicial y luego disminuye. Llamamos tiempo de coherencia a la
+duración de ese intervalo.
+
+El ajuste exponencial de la envolvente comienza cerca de
+\SI{50}{\milli\second} e incluye un término constante. De él se estima
+$Q\simeq1.6\times10^4$. Este valor se obtiene de la tasa de decaimiento
+libre, mientras que el $Q$ del barrido se obtiene del ajuste del pico durante
+la excitación.
+
+El espectrograma muestra la portadora cerca de \SI{67.5}{\kilo\hertz} al
+comienzo del registro. Durante la meseta se distinguen un par de bandas
+laterales prominentes y trazas más débiles, que se acercan a la portadora.
+Hacia el final del tiempo de coherencia, las trazas dejan de distinguirse.
+Luego la portadora baja hacia \SI{65}{\kilo\hertz}. La frecuencia inicial
+queda cerca de la meseta observada en los barridos, mientras que la frecuencia
+final queda cerca de la resonancia lineal.
+
+\onecolumngrid
+\clearpage
 \begin{figure}[H]
 \centering
-\includegraphics[width=\columnwidth]{../Figuras_paper/figure_1_amplitude_sweeps.pdf}
+\includegraphics[width=.95\textwidth]{../Figuras_paper/ringdown_coherence_spectrogram_mosaic.pdf}
+\caption{Espectrogramas de ocho registros de ringdown. Los tiempos indicados
+son estimaciones visuales del tiempo de coherencia, obtenidas a partir de la
+envolvente de cada registro. Cada panel comienza en el apagado y muestra la
+misma ventana de frecuencias, entre \SI{64.6}{\kilo\hertz} y
+\SI{68.8}{\kilo\hertz}.}
+\label{fig:mosaico-ringdowns}
 \end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=\columnwidth]{../Figuras_paper/figure_2_lorentzian_hysteresis.pdf}
-\end{figure}
+\twocolumngrid
+
+La Figura~\ref{fig:mosaico-ringdowns} compara ocho espectrogramas. Los
+tiempos de coherencia, estimados visualmente a partir de la envolvente, van
+de aproximadamente 18 a \SI{49}{\milli\second}. Arriba a la izquierda, el
+registro de unos \SI{49}{\milli\second} muestra un par lateral principal.
+El registro de unos \SI{20}{\milli\second}, en el panel siguiente, también
+muestra un par principal pese a tener un intervalo mucho más corto. En
+cambio, los dos registros de aproximadamente 49 y \SI{48}{\milli\second}
+tienen duraciones parecidas, pero en el de 48 ms se distinguen bandas
+adicionales débiles. En estos ejemplos, el número de bandas visibles no
+sigue una relación directa con el tiempo de coherencia. Chen y colaboradores
+relacionaron la duración de la coherencia con la separación de las bandas
+laterales, que usaron para estimar la tasa de intercambio de energía
+\cite{chen-2017}.
+
 \FloatBarrier
 \subsection{Análisis de resultados}

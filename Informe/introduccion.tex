@@ -1,5 +1,9 @@
 \section{INTRODUCCIÓN}
 
+% TODO:
+% Se hace MUY poco enfasis en la solucion a la ec. de movimiento. 
+% La raiz cuadrada de lorentziana ni aparece
+
 Un resonador microelectromecánico (MEMS) es una estructura mecánica
 micrométrica cuyo movimiento se puede excitar y detectar eléctricamente. En
 este trabajo se estudia el resonador A5, cuya parte móvil se encuentra entre
@@ -10,7 +14,7 @@ oscilación a partir de una señal eléctrica.
 
 \begin{figure}[tb]
 \centering
-\includegraphics[width=\linewidth]{figuras/resonador_a5.jpg}
+\includegraphics[width=.8\linewidth]{figuras/resonador_a5.jpg}
 % Micrografía de la diapositiva 7 de la presentación oral «MEMS - Ramat».
 \caption{Micrografía del resonador A5. En el centro se ven las vigas de la
 parte móvil y, por encima y por debajo, los electrodos en forma de peine.
@@ -36,7 +40,10 @@ $f_{\mathrm{exc}}$.
 
 En el régimen lineal, la frecuencia de oscilación libre es prácticamente
 independiente de la amplitud y vale $f_0\simeq\sqrt{k/m}/(2\pi)$ si el
-amortiguamiento es débil. Cuando $\alpha>0$, la frecuencia aumenta con la
+amortiguamiento es débil. En este régimen, el cuadrado de la amplitud de
+respuesta cerca de $f_0$ sigue un perfil lorentziano. Por lo tanto, el
+módulo de respuesta es proporcional a la raíz cuadrada de ese perfil.
+Cuando $\alpha>0$, la frecuencia aumenta con la
 amplitud $A$ de la oscilación. Para corrimientos pequeños, el aumento es
 aproximadamente proporcional a $A^2$. Este comportamiento se conoce como
 endurecimiento. Al barrer la frecuencia de excitación con $F_0$ fijo, la
@@ -48,7 +55,7 @@ lugar a la histéresis.
 
 \begin{figure}[tb]
 \centering
-\includegraphics[width=\linewidth]{figuras/respuesta_duffing.pdf}
+\includegraphics[width=.8\linewidth,trim=6bp 0 -6bp 0,clip=false]{figuras/respuesta_duffing.pdf}
 \caption{Respuesta de un oscilador forzado cerca de la resonancia lineal
 $f_0$. Se comparan el caso lineal y el caso con endurecimiento para una
 misma amplitud de fuerza. El tramo discontinuo indica soluciones inestables.
